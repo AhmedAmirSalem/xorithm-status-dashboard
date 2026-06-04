@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "name": "Demo User",
+    "email": "demo@xorithm.com",
+    "passwordHash": "$2b$10$RwPofLSOKj.kC4ITpB4Bz.JHURC.6HLJC1M6bgypMdtAIi56Y3v/K"
+  },
+  {
+    "id": "d50aa3fe-1b79-4aaa-82a7-5c09b9b8348a",
+    "name": "Jonathan Joestar",
+    "email": "jon.joestar@xorithm.com",
+    "passwordHash": "$2b$10$lOzd6dv0n70WGFUbg5X2Y.2Gx7je4hNeW6br0/fyukbEEyfuuovc6"
+  }
+]
