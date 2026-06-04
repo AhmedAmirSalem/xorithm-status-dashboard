@@ -44,4 +44,4 @@ next-env.d.ts
 node_modules/
 .next/
 .env.local
-src/lib/users.json
+lib/users.json
