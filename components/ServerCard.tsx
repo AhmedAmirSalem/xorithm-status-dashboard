@@ -12,7 +12,7 @@ export default function ServerCard({
   return (
     <div
       onClick={onClick}
-      className="bg-gray-900 border border-gray-800 rounded-xl p-5 cursor-pointer hover:border-gray-600 hover:bg-gray-800/50 transition-all group"
+      className="bg-gray-900 border border-gray-800 rounded-xl p-5 cursor-pointer hover:border-gray-600 hover:bg-gray-800/50 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-200 group"
     >
       <div className="flex items-start justify-between mb-4">
         <div>

@@ -198,12 +198,17 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {servers.map((server) => (
-              <ServerCard
+            {servers.map((server, i) => (
+              <div
                 key={server.id}
-                server={server}
-                onClick={() => setSelected(server)}
-              />
+                className="animate-slideUp"
+                style={{ animationDelay: `${i * 40}ms`, opacity: 0 }}
+              >
+                <ServerCard
+                  server={server}
+                  onClick={() => setSelected(server)}
+                />
+              </div>
             ))}
           </div>
         )}
@@ -212,11 +217,11 @@ export default function DashboardPage() {
       {/* Detail modal */}
       {selected && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn"
           onClick={() => setSelected(null)}
         >
           <div
-            className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-full max-w-md"
+            className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-full max-w-md animate-slideUp"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between mb-5">
@@ -232,7 +237,7 @@ export default function DashboardPage() {
                 <StatusBadge status={selected.status} />
                 <button
                   onClick={() => setSelected(null)}
-                  className="text-gray-500 hover:text-white transition-colors"
+                  className="text-gray-500 hover:text-white transition-colors hover:bg-gray-800 w-7 h-7 rounded-lg flex items-center justify-center"
                 >
                   ✕
                 </button>
@@ -251,8 +256,12 @@ export default function DashboardPage() {
                 },
                 { label: "Uptime", value: `${selected.uptime}%` },
                 { label: "Last checked", value: selected.lastChecked },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-gray-800 rounded-xl p-4">
+              ].map(({ label, value }, i) => (
+                <div
+                  key={label}
+                  className="bg-gray-800 rounded-xl p-4 animate-slideUp"
+                  style={{ animationDelay: `${i * 50}ms`, opacity: 0 }}
+                >
                   <p className="text-gray-500 text-xs mb-1">{label}</p>
                   <p className="text-white text-sm font-medium">{value}</p>
                 </div>
