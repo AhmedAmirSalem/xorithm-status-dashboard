@@ -1,36 +1,157 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# XOrithm Status Dashboard
+
+A real-time server status dashboard built with Next.js, Tailwind CSS, and NextAuth.js. Monitor the health of your infrastructure at a glance with live status indicators, filtering, and detailed server metrics.
+
+---
+
+## Live Demo
+
+[https://xorithm-server-status.vercel.app](https://xorithm-server-status.vercel.app)
+
+**Demo credentials:**
+- Email: `demo@xorithm.com`
+- Password: `demo1234`
+
+---
+
+## Features
+
+- **Authentication** — Sign up, log in, and log out with email and password. Routes are protected via Next.js middleware.
+- **Server list** — View all servers with color-coded status badges (Up, Degraded, Down).
+- **Filter & sort** — Filter by status and sort by name, response time, or uptime.
+- **Detail view** — Click any server card to see name, IP address, response time, and uptime in a modal.
+- **Auto-refresh** — Dashboard revalidates every 30 seconds with a live countdown timer and manual refresh button.
+- **Loading skeletons** — Skeleton cards shown while data loads for a polished experience.
+- **Empty state** — Friendly message with a clear filter option when no servers match the current filter.
+- **Animations** — Cards stagger in on load, modal slides up on open, cards lift on hover.
+- **Responsive** — Fully usable on mobile, tablet, and desktop.
+
+---
+
+## Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Styling:** Tailwind CSS
+- **Auth:** NextAuth.js (Credentials provider, JWT sessions)
+- **Language:** TypeScript
+- **Deployment:** Vercel
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/AhmedAmirSalem/xorithm-status-dashboard.git
+cd xorithm-status-dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env.local` file in the root directory:
+```env
+NEXTAUTH_SECRET=your-random-secret-here
+NEXTAUTH_URL=http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Generate a secret with:
+```bash
+openssl rand -base64 32
+```
 
-## Learn More
+4. Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── api/
+│   │   └── auth/
+│   │       ├── [...nextauth]/route.ts   # NextAuth handler
+│   │       └── signup/route.ts          # Registration endpoint
+│   ├── (auth)/
+│   │   ├── login/page.tsx               # Login page
+│   │   └── signup/page.tsx              # Signup page
+│   ├── dashboard/
+│   │   ├── page.tsx                     # Dashboard page
+│   │   └── loading.tsx                  # Skeleton loading state
+│   ├── layout.tsx                       # Root layout with SessionProvider
+│   └── page.tsx                         # Root redirect → /dashboard
+├── components/
+│   ├── dashboard/
+│   │   ├── DashboardClient.tsx          # Client state management
+│   │   ├── FilterBar.tsx                # Filter tabs + sort dropdown
+│   │   ├── RefreshBar.tsx               # Auto-refresh countdown
+│   │   ├── ServerDetailModal.tsx        # Server detail modal
+│   │   ├── ServerGrid.tsx               # Server card grid + empty state
+│   │   └── SummaryCards.tsx             # Up/Degraded/Down stat cards
+│   ├── Navbar.tsx                       # Top navigation bar
+│   ├── NavbarClient.tsx                 # Client-side sign out button
+│   ├── ServerCard.tsx                   # Individual server card
+│   ├── SkeletonCard.tsx                 # Loading skeleton card
+│   └── StatusBadge.tsx                  # Color-coded status pill
+├── lib/
+│   ├── auth.ts                          # NextAuth configuration
+│   ├── mock-servers.ts                  # Static server data
+│   └── mock-users.ts                    # JSON-persisted user store
+├── types/
+│   └── next-auth.d.ts                   # Session type augmentation
+└── middleware.ts                        # Route protection
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design Choices
+
+### Authentication
+NextAuth.js with the Credentials provider was chosen for its tight Next.js integration, built-in JWT session handling, and easy upgrade path to a real database via its adapter system. Users are currently persisted to a local `users.json` file, which survives server restarts and can be replaced with a database adapter (e.g. Prisma + PostgreSQL) with no changes to the rest of the codebase.
+
+### Data Layer
+Server data lives in `mock-servers.ts` as a static TypeScript array, satisfying the requirements for mock/static data. The structure mirrors what a real monitoring API would return, making it straightforward to swap in a live data source later.
+
+### Component Architecture
+The dashboard is split into focused single-responsibility components grouped under `components/dashboard/`. Interactive state (filter, sort, selected server, countdown) is owned by `DashboardClient.tsx` and passed down as props, keeping the logic centralised and the display components pure.
+
+### Auto-refresh
+The 30-second auto-refresh with a visual countdown bar simulates the real-world pattern of a monitoring frontend periodically polling a backend for the latest server health snapshot. The refresh function is designed to be replaced with an actual API call with no structural changes.
+
+### Styling
+Tailwind CSS utility classes are used throughout with a dark theme (`gray-950` base) chosen to match the aesthetic of professional status dashboards like those from Stripe and Linear.
+
+---
+
+## Environment Variables
+
+| Variable | Description |
+|---|---|
+| `NEXTAUTH_SECRET` | Secret used to sign JWT tokens. Generate with `openssl rand -base64 32`. |
+| `NEXTAUTH_URL` | Base URL of the application. Use `http://localhost:3000` for local development. |
+
+---
+
+## Deployment
+
+The project is deployed on Vercel. To deploy your own instance:
+
+1. Push the repository to GitHub.
+2. Import the project at [vercel.com](https://vercel.com).
+3. Add `NEXTAUTH_SECRET` and `NEXTAUTH_URL` as environment variables.
+4. Click Deploy.
