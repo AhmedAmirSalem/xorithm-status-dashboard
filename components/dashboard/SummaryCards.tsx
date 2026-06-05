@@ -8,12 +8,20 @@ interface SummaryCardsProps {
   loading: boolean;
 }
 
-export default function SummaryCards({ counts, filter, onFilter, loading }: SummaryCardsProps) {
+export default function SummaryCards({
+  counts,
+  filter,
+  onFilter,
+  loading,
+}: SummaryCardsProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="bg-gray-900 border border-gray-800 rounded-xl p-4 animate-pulse">
+          <div
+            key={i}
+            className="bg-gray-900 border border-gray-800 rounded-xl p-4 animate-pulse"
+          >
             <div className="flex items-center justify-between mb-2">
               <div className="h-6 w-16 bg-gray-800 rounded-full" />
               <div className="h-8 w-8 bg-gray-800 rounded" />
@@ -39,7 +47,9 @@ export default function SummaryCards({ counts, filter, onFilter, loading }: Summ
         >
           <div className="flex items-center justify-between mb-2">
             <StatusBadge status={status} />
-            <span className="text-2xl font-bold text-white">{counts[status]}</span>
+            <span className="text-2xl font-bold text-white">
+              {counts[status]}
+            </span>
           </div>
           <p className="text-gray-500 text-xs capitalize">{status} servers</p>
         </button>

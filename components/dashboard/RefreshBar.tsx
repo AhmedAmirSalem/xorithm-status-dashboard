@@ -4,19 +4,25 @@ interface RefreshBarProps {
   onRefresh: () => void;
 }
 
-export default function RefreshBar({ countdown, refreshing, onRefresh }: RefreshBarProps) {
+export default function RefreshBar({
+  countdown,
+  refreshing,
+  onRefresh,
+}: RefreshBarProps) {
   return (
     <div className="flex items-center justify-between mb-6">
       <h1 className="text-white font-semibold text-lg">System Status</h1>
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           <div className="w-32 h-1.5 bg-gray-800 rounded-full overflow-hidden">
             <div
               className="h-full bg-blue-500 rounded-full transition-all duration-1000"
               style={{ width: `${(countdown / 30) * 100}%` }}
             />
           </div>
-          <span className="text-gray-500 text-xs tabular-nums">{countdown}s</span>
+          <span className="text-gray-500 text-xs tabular-nums">
+            {countdown}s
+          </span>
         </div>
         <button
           onClick={onRefresh}

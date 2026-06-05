@@ -70,7 +70,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-950">
       <Navbar />
-      <main className="max-w-6xl mx-auto px-6 py-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {!loading && (
           <RefreshBar
             countdown={countdown}

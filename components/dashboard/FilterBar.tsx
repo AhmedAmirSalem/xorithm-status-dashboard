@@ -17,8 +17,8 @@ export default function FilterBar({
   onSort,
 }: FilterBarProps) {
   return (
-    <div className="flex items-center justify-between mb-5">
-      <div className="flex gap-2">
+    <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div className="flex flex-wrap gap-2">
         {(["all", "up", "degraded", "down"] as const).map((f) => (
           <button
             key={f}
