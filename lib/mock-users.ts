@@ -17,17 +17,16 @@ const DEMO_USER: MockUser = {
 };
 
 function isRedisConfigured(): boolean {
-  return !!(
-    process.env.UPSTASH_REDIS_REST_URL &&
-    process.env.UPSTASH_REDIS_REST_TOKEN
-  );
+  return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
 }
 
 async function getRedis() {
   const { Redis } = await import("@upstash/redis");
-  return Redis.fromEnv();
+  return new Redis({
+    url: process.env.KV_REST_API_URL!,
+    token: process.env.KV_REST_API_TOKEN!,
+  });
 }
-
 
 const DB_PATH = path.join(process.cwd(), "lib/users.json");
 
@@ -47,7 +46,9 @@ function writeUsersToFile(users: MockUser[]) {
   fs.writeFileSync(DB_PATH, JSON.stringify(users, null, 2));
 }
 
-export async function findUserByEmail(email: string): Promise<MockUser | undefined> {
+export async function findUserByEmail(
+  email: string,
+): Promise<MockUser | undefined> {
   const normalised = email.toLowerCase();
 
   if (isRedisConfigured()) {
@@ -57,15 +58,13 @@ export async function findUserByEmail(email: string): Promise<MockUser | undefin
     return user ?? undefined;
   }
 
-  return readUsersFromFile().find(
-    (u) => u.email.toLowerCase() === normalised
-  );
+  return readUsersFromFile().find((u) => u.email.toLowerCase() === normalised);
 }
 
 export async function createUser(
   name: string,
   email: string,
-  password: string
+  password: string,
 ): Promise<MockUser> {
   const normalised = email.toLowerCase();
   const existing = await findUserByEmail(normalised);
