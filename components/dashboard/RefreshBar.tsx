@@ -27,7 +27,7 @@ export default function RefreshBar({
         <button
           onClick={onRefresh}
           disabled={refreshing}
-          className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-800 disabled:opacity-50"
+          className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-800 disabled:opacity-50 cursor-pointer"
         >
           <svg
             className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`}

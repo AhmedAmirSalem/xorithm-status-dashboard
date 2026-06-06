@@ -39,7 +39,7 @@ export default function SummaryCards({
         <button
           key={status}
           onClick={() => onFilter(status)}
-          className={`bg-gray-900 border rounded-xl p-4 text-left transition-all ${
+          className={`bg-gray-900 border rounded-xl p-4 text-left transition-all cursor-pointer ${
             filter === status
               ? "border-blue-500"
               : "border-gray-800 hover:border-gray-700"
