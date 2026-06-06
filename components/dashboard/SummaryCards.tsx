@@ -46,12 +46,16 @@ export default function SummaryCards({
           }`}
         >
           <div className="flex flex-col gap-2">
-            <StatusBadge status={status} />
+            <div>
+              <StatusBadge status={status} />
+            </div>
             <span className="text-2xl font-bold text-white leading-none">
               {counts[status]}
             </span>
           </div>
-          <p className="text-gray-500 text-xs capitalize mt-2 whitespace-nowrap">{status} servers</p>
+          <p className="text-gray-500 text-xs capitalize mt-2 whitespace-nowrap">
+            {status} servers
+          </p>
         </button>
       ))}
     </div>
