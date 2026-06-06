@@ -34,24 +34,24 @@ export default function SummaryCards({
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4 mb-8">
+    <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
       {(["up", "degraded", "down"] as ServerStatus[]).map((status) => (
         <button
           key={status}
           onClick={() => onFilter(status)}
-          className={`bg-gray-900 border rounded-xl p-4 text-left transition-all cursor-pointer ${
+          className={`bg-gray-900 border rounded-xl p-3 sm:p-4 text-left transition-all cursor-pointer ${
             filter === status
               ? "border-blue-500"
               : "border-gray-800 hover:border-gray-700"
           }`}
         >
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex flex-col gap-2">
             <StatusBadge status={status} />
-            <span className="text-2xl font-bold text-white">
+            <span className="text-2xl font-bold text-white leading-none">
               {counts[status]}
             </span>
           </div>
-          <p className="text-gray-500 text-xs capitalize">{status} servers</p>
+          <p className="text-gray-500 text-xs capitalize mt-2 whitespace-nowrap">{status} servers</p>
         </button>
       ))}
     </div>
