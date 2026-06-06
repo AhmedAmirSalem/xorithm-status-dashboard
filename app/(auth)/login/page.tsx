@@ -94,7 +94,7 @@ export default function LoginPage() {
 
           <button
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            className="mt-4 w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-medium py-2.5 rounded-lg transition-colors"
+            className="mt-4 w-full flex items-center justify-center gap-3 cursor-pointer bg-white hover:bg-gray-100 text-gray-900 font-medium py-2.5 rounded-lg transition-colors"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
